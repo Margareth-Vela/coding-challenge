@@ -45,6 +45,49 @@ const FormField = ({
           className={error ? 'error' : ''}
         />
       )}
+
+      {type === 'select' && (
+        <select
+          id={name}
+          name={name}
+          value={value}
+          onChange={onChange}
+          required={required}
+        >
+          {
+            options.map(
+              opt => (
+                <option value={opt}>{opt}</option>
+              )
+            )
+          }
+        </select>
+      )}
+
+
+      {type === 'text-area' && (
+        <textarea
+          id={name}
+          name={name}
+          value={value}
+          onChange={onChange}
+          required={required}
+        />
+      )}
+
+      {type === 'checkbox' && (
+        <div>
+          <p>Accept terms and conditions</p>
+          <input
+            type='checkbox'
+            id={name}
+            name={name}
+            value={!!value}
+            onChange={onChange}
+            required={required}
+          />
+          </div>
+      )}
       
       {/* TODO: Add support for other input types */}
       

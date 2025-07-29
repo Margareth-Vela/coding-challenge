@@ -26,6 +26,15 @@ const FormContainer = () => {
       phone: ''
     },
     // Add more sections as needed
+    experienceInfo: {
+      company: '',
+      role: '',
+    },
+    optionalInfo: {
+      observations: '',
+      terms: '',
+    },
+    
   });
   
   const [errors, setErrors] = useState({});
@@ -34,6 +43,10 @@ const FormContainer = () => {
   
   // TODO: Implement form validation
   // Create a function to validate the form fields
+
+  const validation = (data) => {
+
+  }
   
   // TODO: Implement form submission
   // Create a function to handle form submission
@@ -49,6 +62,13 @@ const FormContainer = () => {
     e.preventDefault();
     
     // TODO: Add validation logic
+    if(validation()){
+      setSubmissionStatus({
+        success: false,
+        message: 'Form submitted failed validation'
+      });
+      return;
+    }
     
     setIsSubmitting(true);
     
@@ -75,10 +95,14 @@ const FormContainer = () => {
   // TODO: Implement change handlers
   // Create functions to handle changes to form fields
   
-  const handleChange = (e) => {
+  const handleChange = (fieldId, e) => {
     // TODO: Update form data based on input changes
+    setFormData((prev) => ({
+      ...prev,
+      [fieldId]: e,
+    }))
   };
-  
+
   // If we have a submission status, show only that
   if (submissionStatus) {
     return <SubmissionStatus status={submissionStatus} onReset={handleReset} />;
@@ -104,11 +128,80 @@ const FormContainer = () => {
             error={errors.name}
             placeholder="John Doe"
           />
+
+          <FormField
+            label="Email"
+            name="email"
+            value={formData.personalInfo.email}
+            onChange={handleChange}
+            required
+            error={errors.email}
+            placeholder="john@example.com"
+          />
+
+          <FormField
+            label="Phone"
+            name="phone"
+            value={formData.personalInfo.phone}
+            onChange={handleChange}
+            required
+            error={errors.phone}
+            placeholder="123-456-7894"
+          />
           
           {/* TODO: Add more form fields */}
         </FormSection>
-        
-        {/* TODO: Add more form sections */}
+
+        <FormSection title="Work Experience">
+          {/* Example form field */}
+          <FormField
+            label="Company"
+            name="company"
+            value={formData.experienceInfo.company}
+            onChange={handleChange}
+            error={errors.company}
+            placeholder="Company INC"
+          />
+
+          <FormField
+            label="Role"
+            name="role"
+            type='select'
+            options={['Role Number 1','Role Number 2']}
+            value={formData.experienceInfo.role}
+            onChange={handleChange}
+            required
+            error={errors.role}
+          />
+          
+          {/* TODO: Add more form fields */}
+        </FormSection>
+
+      {/*Conditional Section */}
+        <FormSection title="Optional Information">
+          {/* Example form field */}
+          <FormField
+            label="Observations"
+            name="observations"
+            value={formData.optionalInfo.observations}
+            type='text-area'
+            onChange={handleChange}
+            required
+            error={errors.observations}
+          />
+
+          <FormField
+            label="Terms"
+            name="terms"
+            value={formData.optionalInfo.terms}
+            type='checkbox'
+            onChange={handleChange}
+            required
+            error={errors.terms}
+          />
+          
+          {/* TODO: Add more form fields */}
+        </FormSection>
         
         <div className="form-actions">
           <button 
